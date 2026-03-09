@@ -1,7 +1,7 @@
 from fastapi import FastAPI
-from app.routes import health, license_route
+from app.routes import health, license
 
 app = FastAPI(root_path="/api/v1")
 
 app.include_router(health.router)
-app.include_router(license_route.router)
+app.include_router(license.router)
