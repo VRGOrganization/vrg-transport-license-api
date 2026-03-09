@@ -1,33 +1,17 @@
 # VRG Transport API License
 
-API de licenciamento para transporte VRG.
+API para geracao de carteirinhas de transporte estudantil.
 
-## Requisitos
-
-- Python 3.12+
-- Docker (opcional)
-
-## Executar localmente
+## Rodar
 
 ```bash
-pip install -r requirements.txt
-uvicorn app.main:app --reload
+docker compose up -d --build
 ```
 
-## Executar com Docker
+API disponivel em `http://localhost:8000`.
 
-```bash
-cp .env.example .env
-docker compose up --build
-```
+## Documentacao
 
-## Endpoints
-
-| Método | Rota      | Descrição    |
-|--------|-----------|--------------|
-| GET    | `/health` | Health check |
-
-## Acesso
-
-- API: http://localhost:8000
-- Docs: http://localhost:8000/docs
+- [API - Endpoints e exemplos](docs/api.md)
+- [Estrutura do projeto](docs/estrutura.md)
+- [Configuracao - Template, fontes, Docker](docs/configuracao.md)
