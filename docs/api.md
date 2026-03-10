@@ -28,7 +28,15 @@ Verifica se o modulo de licenca esta ativo.
 
 ### POST /license/create
 
-Gera a carteirinha do estudante a partir dos dados enviados. Retorna a imagem diretamente no body da resposta (nao salva em disco).
+Gera a carteirinha do estudante a partir dos dados enviados. Retorna a imagem em base64 no corpo da resposta.
+
+**Headers:**
+
+| Header      | Tipo   | Obrigatorio | Descricao                          |
+|-------------|--------|-------------|------------------------------------|
+| `X-Api-Key` | string | Sim*        | Chave de autorizacao da API        |
+
+\* Obrigatorio quando a chave estiver configurada no servidor.
 
 **Body (JSON):**
 
@@ -47,14 +55,28 @@ Gera a carteirinha do estudante a partir dos dados enviados. Retorna a imagem di
 
 **Campos obrigatorios:** todos.
 
-**Resposta:** `image/jpeg`
+**Respostas:**
+
+| Status | Descricao                          |
+|--------|------------------------------------|
+| 201    | Carteirinha gerada com sucesso     |
+| 403    | Nao autorizado (chave invalida)    |
+| 422    | Campos obrigatorios ausentes       |
+
+**Resposta 201:**
+
+```json
+{
+  "image": "<base64 da imagem JPG>"
+}
+```
 
 **Exemplo com curl:**
 
 ```bash
-mkdir -p tmp
-curl -s -o tmp/carteirinha.jpg -X POST http://localhost:8000/license/create \
+curl -s -X POST http://localhost:8000/api/v1/license/create \
   -H "Content-Type: application/json" \
+  -H "X-Api-Key: SUA_CHAVE" \
   -d '{
     "id": "1",
     "name": "Joao da Silva",
