@@ -1,4 +1,9 @@
+import os
 from pathlib import Path
+
+from dotenv import load_dotenv
+
+load_dotenv()
 
 ASSETS_DIR: Path = Path(__file__).resolve().parent / "assets"
 TEMPLATE_PATH: Path = ASSETS_DIR / "modelo.jpg"
@@ -19,3 +24,5 @@ FONT_PATHS: list[str] = [
     str(ASSETS_DIR / "font.ttf"),
     "app/assets/fonts/Roboto-Regular.ttf"
 ]
+
+API_KEY: str | None = os.getenv("API_KEY")

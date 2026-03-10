@@ -27,14 +27,17 @@ def _write_fields(draw: ImageDraw.ImageDraw, student: Student, font: ImageFont.F
     for field, value in fields.items():
         draw.text(FIELD_POSITIONS[field], value, fill=TEXT_COLOR, font=font)
 
-
+"""Exporta a imagem como JPEG e retorna os bytes."""
 def _export_image(image: Image.Image) -> bytes:
     buffer: BytesIO = BytesIO()
     image.save(buffer, "JPEG", quality=95)
     buffer.seek(0)
     return buffer.getvalue()
 
-
+"""
+Gera a carteirinha preenchida com os dados do estudante.
+Abre o template, escreve os campos e exporta como JPEG.
+"""
 def fill_license(student: Student) -> bytes:
     template: Image.Image = Image.open(TEMPLATE_PATH).convert("RGB")
     font: ImageFont.FreeTypeFont | ImageFont.ImageFont = _load_font()
