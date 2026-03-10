@@ -19,11 +19,10 @@ def _load_font(size: int = FONT_SIZE) -> ImageFont.FreeTypeFont | ImageFont.Imag
 def _write_fields(draw: ImageDraw.ImageDraw, student: Student, font: ImageFont.FreeTypeFont | ImageFont.ImageFont) -> None:
     fields: dict[str, str] = {
         "name": student.name,
-        "degree": student.degree,
-        "registry": student.registry,
         "institution": student.institution,
-        "shift": student.shift,
+        "degree": student.degree,
         "telephone": student.telephone,
+        "shift": student.shift,
         "blood_type": student.blood_type,
     }
     for field, value in fields.items():
