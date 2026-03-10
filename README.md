@@ -15,3 +15,9 @@ API disponivel em `http://localhost:8000`.
 - [API - Endpoints e exemplos](docs/api.md)
 - [Estrutura do projeto](docs/estrutura.md)
 - [Configuracao - Template, fontes, Docker](docs/configuracao.md)
+
+## Ferramentas
+
+- [Preview da carteirinha](tools/docs/preview.md)
+- [Teste interativo da API](tools/docs/test_api.md)
+- [Mapeador de campos](tools/docs/map_fields.md)
