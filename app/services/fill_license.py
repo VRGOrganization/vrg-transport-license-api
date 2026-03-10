@@ -3,7 +3,6 @@ from io import BytesIO
 from PIL import Image, ImageDraw, ImageFont
 
 from app.config import FIELD_POSITIONS, FONT_PATHS, FONT_SIZE, TEMPLATE_PATH, TEXT_COLOR
-from app.schemas.output_format import OutputFormat
 from app.schemas.student import Student
 
 
@@ -29,20 +28,17 @@ def _write_fields(draw: ImageDraw.ImageDraw, student: Student, font: ImageFont.F
         draw.text(FIELD_POSITIONS[field], value, fill=TEXT_COLOR, font=font)
 
 
-def _export_image(image: Image.Image, output_format: OutputFormat) -> bytes:
+def _export_image(image: Image.Image) -> bytes:
     buffer: BytesIO = BytesIO()
-    if output_format == OutputFormat.PDF:
-        image.save(buffer, "PDF")
-    else:
-        image.save(buffer, "JPEG", quality=95)
+    image.save(buffer, "JPEG", quality=95)
     buffer.seek(0)
     return buffer.getvalue()
 
 
-def fill_license(student: Student, output_format: OutputFormat = OutputFormat.JPG) -> bytes:
+def fill_license(student: Student) -> bytes:
     template: Image.Image = Image.open(TEMPLATE_PATH).convert("RGB")
     font: ImageFont.FreeTypeFont | ImageFont.ImageFont = _load_font()
 
     _write_fields(ImageDraw.Draw(template), student, font)
 
-    return _export_image(template, output_format)
+    return _export_image(template)
