@@ -49,11 +49,12 @@ Gera a carteirinha do estudante a partir dos dados enviados. Retorna a imagem em
   "institution": "UFPE",
   "shift": "Manha",
   "telephone": "(81) 99999-0000",
-  "blood_type": "O+"
+  "blood_type": "O+",
+  "photo": "<base64 da foto do estudante (opcional)>"
 }
 ```
 
-**Campos obrigatorios:** todos.
+**Campos obrigatorios:** todos, exceto `photo`.
 
 **Respostas:**
 

@@ -9,3 +9,4 @@ class Student(BaseModel):
     shift: str
     telephone: str
     blood_type: str
+    photo: str | None = None  # base64 da foto do estudante (opcional)

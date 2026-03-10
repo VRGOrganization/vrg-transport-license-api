@@ -17,6 +17,9 @@ FIELD_POSITIONS: dict[str, tuple[int, int]] = {
     "blood_type":  (520, 355),   # campo Tipo Sanguíneo
 }
 
+PHOTO_POSITION: tuple[int, int] = (50, 50)    # (x, y) onde a foto sera colada
+PHOTO_SIZE: tuple[int, int] = (200, 250)      # (largura, altura) da foto em pixels
+
 TEXT_COLOR: tuple[int, int, int] = (0, 0, 0)
 FONT_SIZE: int = 20
 
