@@ -2,7 +2,7 @@
 
 ## Template
 
-O template da carteirinha fica em `app/assets/license_template.jpg`. Para trocar, substitua o arquivo mantendo o mesmo nome.
+O template da carteirinha fica em `app/assets/modelo.jpg`. Para trocar, substitua o arquivo mantendo o mesmo nome.
 
 ## Posicoes dos campos
 
@@ -10,13 +10,12 @@ Definidas em `app/config.py` no dicionario `FIELD_POSITIONS`. Cada campo mapeia 
 
 ```python
 FIELD_POSITIONS = {
-    "name": (300, 50),
-    "degree": (300, 100),
-    "registry": (300, 150),
-    "institution": (300, 200),
-    "shift": (300, 250),
-    "telephone": (300, 300),
-    "blood_type": (300, 350),
+    "name":        (280,  70),
+    "institution": (280, 145),
+    "degree":      (280, 210),
+    "telephone":   (280, 285),
+    "shift":       (280, 355),
+    "blood_type":  (520, 355),
 }
 ```
 
@@ -58,3 +57,4 @@ docker compose logs -f api
 - fastapi >= 0.104.0
 - uvicorn[standard] >= 0.24.0
 - Pillow >= 10.0.0
+- python-dotenv >= 1.0.0
