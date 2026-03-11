@@ -49,6 +49,7 @@ Gera a carteirinha do estudante a partir dos dados enviados. Retorna a imagem em
   "shift": "Manha",
   "telephone": "(81) 99999-0000",
   "blood_type": "O+",
+  "bus": "02",
   "photo": "<base64 da foto do estudante (opcional)>"
 }
 ```
@@ -84,6 +85,7 @@ curl -s -X POST http://localhost:8000/api/v1/license/create \
     "institution": "UFPE",
     "shift": "Manha",
     "telephone": "(81) 99999-0000",
-    "blood_type": "O+"
+    "blood_type": "O+",
+    "bus": "02"
   }'
 ```

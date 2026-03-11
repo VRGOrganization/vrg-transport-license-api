@@ -23,6 +23,7 @@ STUDENT_OK = {
     "shift": "Manha",
     "telephone": "(81) 99999-0000",
     "blood_type": "O+",
+    "bus": "06",
 }
 
 TESTS = {
