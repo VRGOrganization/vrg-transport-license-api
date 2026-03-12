@@ -1,6 +1,10 @@
+import base64
+import binascii
 from io import BytesIO
 
+from fastapi import HTTPException
 from PIL import Image, ImageDraw, ImageFont
+from PIL.Image import UnidentifiedImageError
 
 from app.config import FIELD_FONT_SIZES, FIELD_POSITIONS, FONT_PATHS, PHOTO_POSITION, PHOTO_SIZE, TEMPLATE_PATH, TEXT_COLOR
 from app.schemas.student import Student
@@ -32,9 +36,18 @@ def _write_fields(draw: ImageDraw.ImageDraw, student: Student) -> None:
 
 # Decodifica a foto base64 e cola no template na posicao configurada
 def _paste_photo(template: Image.Image, photo_base64: str) -> None:
-    import base64
-    photo_bytes = base64.b64decode(photo_base64)
-    photo = Image.open(BytesIO(photo_bytes)).convert("RGB")
+    try:
+        photo_bytes = base64.b64decode(photo_base64)
+    except (binascii.Error, ValueError) as e:
+        raise HTTPException(status_code=400, detail=f"Formato de foto inválido (base64): {str(e)}")
+    
+    try:
+        photo = Image.open(BytesIO(photo_bytes)).convert("RGB")
+    except UnidentifiedImageError as e:
+        raise HTTPException(status_code=400, detail=f"Formato de imagem não suportado: {str(e)}")
+    except Exception as e:
+        raise HTTPException(status_code=400, detail=f"Erro ao processar foto: {str(e)}")
+    
     photo = photo.resize(PHOTO_SIZE)
     template.paste(photo, PHOTO_POSITION)
 
@@ -50,7 +63,15 @@ Gera a carteirinha preenchida com os dados do estudante.
 Abre o template, escreve os campos e exporta como JPEG.
 """
 def fill_license(student: Student) -> bytes:
-    template: Image.Image = Image.open(TEMPLATE_PATH).convert("RGB")
+    try:
+        template: Image.Image = Image.open(TEMPLATE_PATH).convert("RGB")
+    except FileNotFoundError:
+        raise HTTPException(status_code=500, detail="Template da carteirinha não encontrado")
+    except UnidentifiedImageError:
+        raise HTTPException(status_code=500, detail="Template da carteirinha é inválido")
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Erro ao carregar template: {str(e)}")
+    
     if student.photo:
         _paste_photo(template, student.photo)
 

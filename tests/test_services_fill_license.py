@@ -166,9 +166,13 @@ class TestFillLicense:
     @patch("app.services.fill_license.Image")
     def test_fill_license_template_not_found(self, mock_image_class, valid_student_data):
         """Teste quando template não é encontrado."""
+        from fastapi import HTTPException
         mock_image_class.open.side_effect = FileNotFoundError("Template not found")
         
         student = Student(**valid_student_data)
         
-        with pytest.raises(FileNotFoundError):
+        with pytest.raises(HTTPException) as exc_info:
             fill_license(student)
+        
+        assert exc_info.value.status_code == 500
+        assert "Template da carteirinha não encontrado" in exc_info.value.detail
