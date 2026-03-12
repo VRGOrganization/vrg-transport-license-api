@@ -2,6 +2,6 @@ from fastapi import APIRouter
 
 router = APIRouter()
 
-@router.get("/health")
-def health_check():
-    return {"status": "healthy"}
+@router.get("/health", status_code=200)
+def health_check() -> str:
+    return "healthy"
