@@ -10,33 +10,23 @@ Root path: `/api/v1`
 
 Verifica se a API esta rodando.
 
-**Resposta:**
+**Resposta:** `200 OK`
 
 ```json
-{"status": "healthy"}
-```
-
-### GET /license
-
-Verifica se o modulo de licenca esta ativo.
-
-**Resposta:**
-
-```json
-{"status": "OK"}
+"healthy"
 ```
 
 ### POST /license/create
 
-Gera a carteirinha do estudante a partir dos dados enviados. Retorna a imagem em base64 no corpo da resposta.
+Gera a carteirinha do estudante a partir dos dados enviados. Retorna a imagem em base64.
 
 **Headers:**
 
 | Header      | Tipo   | Obrigatorio | Descricao                          |
 |-------------|--------|-------------|------------------------------------|
-| `X-Api-Key` | string | Sim*        | Chave de autorizacao da API        |
+| `X-Api-Key` | string | Condicional | Chave de autorizacao da API        |
 
-\* Obrigatorio quando a chave estiver configurada no servidor.
+*Obrigatorio apenas quando API_KEY estiver configurada no servidor.
 
 **Body (JSON):**
 
@@ -54,15 +44,20 @@ Gera a carteirinha do estudante a partir dos dados enviados. Retorna a imagem em
 }
 ```
 
-**Campos obrigatorios:** todos, exceto `photo`.
+**Campos obrigatorios:** Todos exceto `photo`
+
+**Validacoes:**
+- Todos os campos obrigatorios devem ter pelo menos 1 caractere
+- Strings vazias sao rejeitadas
+- `photo` e opcional (pode ser null ou omitido)
 
 **Respostas:**
 
-| Status | Descricao                          |
-|--------|------------------------------------|
-| 201    | Carteirinha gerada com sucesso     |
-| 403    | Nao autorizado (chave invalida)    |
-| 422    | Campos obrigatorios ausentes       |
+| Status | Descricao                                    |
+|--------|----------------------------------------------|
+| 201    | Carteirinha gerada com sucesso               |
+| 403    | Nao autorizado (chave invalida ou ausente)   |
+| 422    | Dados invalidos (campo faltando ou vazio)    |
 
 **Resposta 201:**
 
