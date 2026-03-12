@@ -9,16 +9,13 @@ from app.services.fill_license import fill_license
 
 router = APIRouter(prefix="/license")
 
-
-@router.get("")
-def license_check():
-    return {"status": "OK"}
-
 """
 Gera a carteirinha do estudante e retorna a imagem em base64.
 
 Valida a chave de autorizacao via header X-Api-Key.
 Retorna 201 com a imagem, 403 se nao autorizado, ou 422 se faltar campos.
+
+TODO: verificar a necessidade dela ser async, tratar a chegada de dados
 """
 @router.post("/create", status_code=201)
 def create_license(
