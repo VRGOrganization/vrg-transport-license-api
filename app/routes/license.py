@@ -7,7 +7,7 @@ from app.config import API_KEY
 from app.schemas.student import Student
 from app.services.fill_license import fill_license
 
-router = APIRouter(prefix="/license")
+router = APIRouter(prefix="/api/v1/license")
 
 """
 Gera a carteirinha do estudante e retorna a imagem em base64.
