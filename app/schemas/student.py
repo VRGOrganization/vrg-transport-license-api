@@ -3,6 +3,7 @@ from pydantic import BaseModel, Field
 
 class Student(BaseModel):
     id: str =           Field(min_length=1, description="ID do estudante")
+    employee_id: str =  Field(min_length=1, description="ID do funcionario que realizou criacao da carteirinha")
     name: str =         Field(min_length=1, description="Nome completo do estudante")
     degree: str =       Field(min_length=1, description="Curso do estudante")
     institution: str =  Field(min_length=1, description="Instituição de ensino")
