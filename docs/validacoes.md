@@ -13,6 +13,7 @@ from pydantic import BaseModel, Field
 
 class Student(BaseModel):
     id: str = Field(min_length=1, description="ID do estudante")
+    employee_id: str = Field(min_length=1, description="ID do funcionario que realizou criacao da carteirinha")
     name: str = Field(min_length=1, description="Nome completo do estudante")
     degree: str = Field(min_length=1, description="Curso do estudante")
     institution: str = Field(min_length=1, description="Instituicao de ensino")
@@ -28,6 +29,7 @@ class Student(BaseModel):
 | Campo | Tipo | Obrigatorio | Validacao |
 |-------|------|-------------|-----------|
 | `id` | string | Sim | min_length=1 |
+| `employee_id` | string | Sim | min_length=1 |
 | `name` | string | Sim | min_length=1 |
 | `degree` | string | Sim | min_length=1 |
 | `institution` | string | Sim | min_length=1 |
@@ -48,6 +50,7 @@ Headers: X-Api-Key: sua-chave
 
 {
   "id": "2024001",
+  "employee_id": "emp-0001",
   "name": "Joao da Silva",
   "degree": "Engenharia de Software",
   "institution": "UFPE",
@@ -72,6 +75,7 @@ Headers: X-Api-Key: sua-chave
 ```json
 {
   "id": "2024001",
+  "employee_id": "emp-0001",
   "name": "",  // String vazia
   ...
 }
@@ -96,6 +100,7 @@ Headers: X-Api-Key: sua-chave
 ```json
 {
   "id": "2024001",
+  "employee_id": "emp-0001",
   // "name": faltando
   ...
 }
@@ -120,6 +125,7 @@ Headers: X-Api-Key: sua-chave
 ```json
 {
   "id": 2024001,  // Numero ao inves de string
+  "employee_id": "emp-0001",
   ...
 }
 ```
@@ -143,7 +149,7 @@ A rota `/license/create` valida API key via header `X-Api-Key`:
 
 ```python
 if API_KEY is not None and x_api_key != API_KEY:
-    raise HTTPException(status_code=403, detail="Nao autorizado")
+  raise AppError(code="ERR001", origin="route.license.auth")
 ```
 
 | Cenario | Resposta |
@@ -163,7 +169,8 @@ Headers: X-Api-Key: chave-errada
 Resposta: `403 Forbidden`
 ```json
 {
-  "detail": "Nao autorizado"
+  "code": "ERR001",
+  "status": 403
 }
 ```
 

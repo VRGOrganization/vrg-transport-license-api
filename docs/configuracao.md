@@ -40,6 +40,16 @@ Definida em `TEXT_COLOR` como tupla RGB. Padrao: `(0, 0, 0)` (preto).
 
 Requer um arquivo `.env` na raiz (mesmo que vazio). O container expoe a porta 8000.
 
+Variaveis recomendadas para logs no Mongo Atlas:
+
+```env
+APP_ENV=development
+API_KEY=teste-123
+MONGO_URI=mongodb+srv://<usuario>:<senha>@<cluster>.mongodb.net/?retryWrites=true&w=majority&appName=<app-name>
+MONGO_DB=vrg_transport
+MONGO_COLLECTION=operation_logs
+```
+
 ```bash
 # subir
 docker compose up -d --build
@@ -58,3 +68,4 @@ docker compose logs -f api
 - uvicorn[standard] >= 0.24.0
 - Pillow >= 10.0.0
 - python-dotenv >= 1.0.0
+- pymongo >= 4.8.0
