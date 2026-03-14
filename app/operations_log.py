@@ -1,5 +1,6 @@
 import logging
 from datetime import datetime, timezone
+from zoneinfo import ZoneInfo
 
 from app.config import MONGO_COLLECTION, MONGO_DB, MONGO_URI
 
@@ -32,7 +33,7 @@ class OperationsLogger:
         return self._collection
 
     def log(self, payload: dict) -> None:
-        payload["data_hora"] = datetime.now(timezone.utc).isoformat()
+        payload["data_hora"] = datetime.now(ZoneInfo("America/Sao_Paulo")).isoformat()
         collection = self._get_collection()
 
         if collection is None:
