@@ -37,6 +37,7 @@ def valid_student_data():
     """Dados válidos de um estudante para testes."""
     return {
         "id": "2024001",
+        "employee_id": "emp-0001",
         "name": "João da Silva",
         "degree": "Engenharia de Software",
         "institution": "UFPE",
@@ -61,6 +62,7 @@ def empty_student_data():
     """Dados de estudante com campos vazios (teste de validação)."""
     return {
         "id": "",
+        "employee_id": "",
         "name": "",
         "degree": "",
         "institution": "",

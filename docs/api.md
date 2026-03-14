@@ -33,6 +33,7 @@ Gera a carteirinha do estudante a partir dos dados enviados. Retorna a imagem em
 ```json
 {
   "id": "1",
+  "employee_id": "emp-0001",
   "name": "Joao da Silva",
   "degree": "Engenharia de Software",
   "institution": "UFPE",
@@ -57,6 +58,8 @@ Gera a carteirinha do estudante a partir dos dados enviados. Retorna a imagem em
 |--------|----------------------------------------------|
 | 201    | Carteirinha gerada com sucesso               |
 | 403    | Nao autorizado (chave invalida ou ausente)   |
+| 400    | Erro de entrada (foto/base64/imagem)         |
+| 500    | Erro interno no processamento                |
 | 422    | Dados invalidos (campo faltando ou vazio)    |
 
 **Resposta 201:**
@@ -67,6 +70,32 @@ Gera a carteirinha do estudante a partir dos dados enviados. Retorna a imagem em
 }
 ```
 
+**Contrato de erro (catalogo):**
+
+Para erros controlados da aplicacao, a API retorna somente `code` e `status`.
+
+```json
+{
+  "code": "ERR001",
+  "status": 403
+}
+```
+
+**Catalogo de codigos:**
+
+| Code   | Status | Cenario |
+|--------|--------|---------|
+| ERR001 | 403    | Nao autorizado (API key invalida/ausente) |
+| ERR002 | 400    | Foto em base64 invalida |
+| ERR003 | 400    | Formato de imagem nao suportado |
+| ERR004 | 400    | Erro ao processar foto |
+| ERR010 | 500    | Template da carteirinha nao encontrado |
+| ERR011 | 500    | Template da carteirinha invalido |
+| ERR012 | 500    | Erro ao carregar template |
+| ERR099 | 500    | Erro interno inesperado |
+
+Observacao: erros de validacao de schema (Pydantic/FastAPI) continuam em `422` no formato padrao (`detail`).
+
 **Exemplo com curl:**
 
 ```bash
@@ -75,6 +104,7 @@ curl -s -X POST http://localhost:8000/api/v1/license/create \
   -H "X-Api-Key: SUA_CHAVE" \
   -d '{
     "id": "1",
+    "employee_id": "emp-0001",
     "name": "Joao da Silva",
     "degree": "Engenharia de Software",
     "institution": "UFPE",

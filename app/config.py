@@ -14,7 +14,7 @@ FIELD_POSITIONS: dict[str, tuple[int, int]] = {
     "degree":      (340, 257),   # campo Curso
     "telephone":   (340, 346),   # campo Cel.
     "shift":       (340, 435),   # campo Período
-    "blood_type":  (640, 435),  # campo Tipo Sanguíneo
+    "blood_type":  (640, 435),   # campo Tipo Sanguíneo
     "bus":         (590, 555),   # campo Onibus
 }
 
@@ -33,4 +33,7 @@ FONT_PATHS: list[str] = [
     "app/assets/fonts/Roboto-Regular.ttf"
 ]
 
-API_KEY: str | None = os.getenv("API_KEY")
+API_KEY: str | None     = os.getenv("API_KEY")
+MONGO_URI: str | None   = os.getenv("MONGO_URI")
+MONGO_DB: str           = os.getenv("MONGO_DB")
+MONGO_COLLECTION: str   = os.getenv("MONGO_COLLECTION")
