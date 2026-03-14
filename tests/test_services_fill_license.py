@@ -7,6 +7,7 @@ from unittest.mock import MagicMock, Mock, patch
 import pytest
 from PIL import Image
 
+from app.errors import AppError
 from app.schemas.student import Student
 from app.services.fill_license import (
     _export_image,
@@ -96,8 +97,11 @@ class TestPastePhoto:
         """Teste com base64 inválido - deve levantar exceção."""
         mock_template = Mock()
         
-        with pytest.raises(Exception):  # base64.b64decode vai falhar
+        with pytest.raises(AppError) as exc_info:
             _paste_photo(mock_template, "invalid_base64!@#")
+
+        assert exc_info.value.code == "ERR002"
+        assert exc_info.value.status == 400
 
 
 class TestExportImage:
@@ -166,13 +170,12 @@ class TestFillLicense:
     @patch("app.services.fill_license.Image")
     def test_fill_license_template_not_found(self, mock_image_class, valid_student_data):
         """Teste quando template não é encontrado."""
-        from fastapi import HTTPException
         mock_image_class.open.side_effect = FileNotFoundError("Template not found")
         
         student = Student(**valid_student_data)
         
-        with pytest.raises(HTTPException) as exc_info:
+        with pytest.raises(AppError) as exc_info:
             fill_license(student)
         
-        assert exc_info.value.status_code == 500
-        assert "Template da carteirinha não encontrado" in exc_info.value.detail
+        assert exc_info.value.code == "ERR010"
+        assert exc_info.value.status == 500

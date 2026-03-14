@@ -58,7 +58,7 @@ class TestLicenseCreate:
         )
         
         assert response.status_code == 403
-        assert response.json()["detail"] == "Nao autorizado"
+        assert response.json() == {"code": "ERR001", "status": 403}
     
     def test_create_license_missing_api_key(
         self, test_client, mock_api_key, valid_student_data
@@ -70,7 +70,7 @@ class TestLicenseCreate:
         )
         
         assert response.status_code == 403
-        assert response.json()["detail"] == "Nao autorizado"
+        assert response.json() == {"code": "ERR001", "status": 403}
     
     def test_create_license_no_auth_configured(
         self, test_client, mock_api_key_none, valid_student_data, mock_fill_license
